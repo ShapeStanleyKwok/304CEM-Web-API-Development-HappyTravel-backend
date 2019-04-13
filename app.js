@@ -13,17 +13,23 @@ const Koa = require('koa')
 const app = new Koa()
 
 
+const env = process.env.NODE_ENV || 'devlopment'
+const isTestEnv = env === 'test'
+
 /**
  * 
  * connect to database
  * 
  */
+mongoose.set('useFindAndModify', false)
 mongoose.connect(config.atlasURI, {
     useNewUrlParser: true
 })
+
 mongoose.connection.on("connected", () => {
-    console.log("[App] MongoDB connected success.")
+    if (!isTestEnv) console.log("[App] MongoDB connected success.")
 })
+
 mongoose.connection.on("error", err => {
     console.log(err)
     console.log("[App] MongoDB connected fail.")
@@ -35,10 +41,10 @@ mongoose.connection.on("error", err => {
  * apply middlewares
  * 
  */
-
-app.use(error())
-app.use(logger())
-
+if (!isTestEnv) {
+    app.use(error())
+    app.use(logger())
+}
 app.use(static(
     path.join(__dirname, config.staticPath)
 ))
@@ -61,11 +67,13 @@ app.use(ctx => {
 
 /**
  * 
- * start service
+ * start
  * 
  */
-app.listen(config.port)
+module.exports = app.listen(config.port)
 
-console.log()
-console.log(`[App] server running on port: ${config.port}`)
-console.log()
+if (!isTestEnv) {
+    console.log()
+    console.log(`[App] server running on port: ${config.port}`)
+    console.log()
+}

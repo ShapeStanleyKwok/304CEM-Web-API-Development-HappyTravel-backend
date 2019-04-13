@@ -1,33 +1,23 @@
 const mongoose = require('mongoose')
+const commentsSchema = require('./comment').schema
 
-const user = new mongoose.Schema({
+const destination = new mongoose.Schema({
     id: mongoose.Schema.ObjectId,
-    email: {
+    name: {
         type: String,
         required: true
     },
-    password: {
+    banner: {
         type: String,
         required: true
     },
-    nickname: {
-        type: String,
-        default: 'HTUser'
-    },
-    avatar: {
-        type: String,
-        default: '/avatar.jpg'
-    },
-    contry: {
+    description: {
         type: String,
         default: ''
     },
     address: {
         type: String,
         default: ''
-    },
-    DOB: {
-        type: Date
     },
     created: {
         type: Date,
@@ -36,11 +26,12 @@ const user = new mongoose.Schema({
     updated: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [commentsSchema]
 })
 
 
 module.exports = {
-    schema: user,
-    model: mongoose.model("user", user)
+    schema: destination,
+    model: mongoose.model("destination", destination)
 }
