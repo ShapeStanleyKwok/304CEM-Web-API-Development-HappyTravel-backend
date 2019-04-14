@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const DESTINATION = require('../service/destination')
+const DESTINATION = require('../service/destination.service')
 
 router
     /**
@@ -7,22 +7,15 @@ router
      */
     .get('/api/destination', async ctx => {
 
-
-        let min = ctx.query.min || 0
-        let max = ctx.query.max || 4
-
+        let min = ctx.query.min
+        let max = ctx.query.max
         let sort = ctx.query.sort
 
-        let res = await DESTINATION.find()
+        let res = await DESTINATION.find(sort, min, max)
 
         ctx.body = {
             code: 200,
-            data: res.slice(min, max),
-            _links: {
-                self: {
-                    href: '/api/detination'
-                }
-            },
+            data: res,
             message: 'success'
         }
     })

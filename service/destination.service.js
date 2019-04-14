@@ -6,8 +6,8 @@ module.exports = {
         return DETINATION.create(doc)
     },
 
-    find(sort = 'created') {
-        return DETINATION.find().sort(sort)
+    find(sortKey = 'created', min, max) {
+        return DETINATION.find().sort(sortKey)
     },
 
     update(_id, description) {

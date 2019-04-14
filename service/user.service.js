@@ -1,5 +1,4 @@
 const USER = require('../models/user').model
-
 module.exports = {
 
     find(key, value) {
@@ -10,13 +9,16 @@ module.exports = {
     },
 
     register(email, password) {
-        return USER.create({
+
+        const user = new USER({
             email,
             password
         })
+        return USER.create(user)
     },
 
     login(email, password) {
+        
         return USER.findOne({
             email,
             password

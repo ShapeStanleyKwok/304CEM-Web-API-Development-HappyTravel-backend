@@ -1,11 +1,11 @@
 const router = require('koa-router')()
-const USER = require('../service/user')
+const USER = require('../service/user.service')
 
 router
     /**
      * register
      */
-    .post('/api/user/register', async ctx => {
+    .post('/api/user', async ctx => {
 
         const {
             email,
@@ -18,7 +18,7 @@ router
         if (isExist) {
             return ctx.body = {
                 code: -1,
-                message: 'the user already exists'
+                message: 'the email already exists'
             }
         }
 
@@ -30,33 +30,27 @@ router
             data: {
                 _id: user._id
             },
-            _links: {
-                self: {
-                    href: '/api/user/register'
-                },
-                login: {
-                    href: '/api/user/login'
-                },
-                user: {
-                    href: '/api/user'
-                }
-            },
             message: 'success'
         }
     })
     /**
-     * login
+     * authorization
      * 
      * authorization:'HT <email>:<password>'
      */
-    .post('/api/user/login', async ctx => {
+    .post('/api/user/authorization', async ctx => {
 
+        const authorization = ctx.headers.authorization
+        if (!authorization) {
+            return ctx.body = {
+                code: -1,
+                message: 'please set the request header [Authorization]'
+            }
+        }
 
-        let auth = ctx.headers.authorization.replace('HT ', '').split(':')
-        let email = auth[0],
-            password = auth[1]
-
-
+        let auth = authorization.replace('HT ', '').split(':')
+        let email = auth[0]
+        let password = auth[1]
 
         let user = await USER.login(email, password)
 
@@ -73,17 +67,6 @@ router
             code: 200,
             data: {
                 _id: user._id
-            },
-            _links: {
-                self: {
-                    href: '/api/user/login'
-                },
-                register: {
-                    href: '/api/user/register'
-                },
-                user: {
-                    href: '/api/user'
-                }
             },
             message: 'success'
         }
@@ -118,11 +101,6 @@ router
                 creted: user.creted,
                 updated: user.updated
             },
-            _links: {
-                self: {
-                    href: '/api/user'
-                }
-            },
             message: 'success'
         }
 
@@ -135,17 +113,10 @@ router
         const _id = ctx.params.id
         const user = ctx.request.body
 
-        user['updated'] = Date.now()
-
         await USER.update(_id, user).then(res => {
             if (res) {
                 ctx.body = {
                     code: 200,
-                    _links: {
-                        self: {
-                            href: '/api/user'
-                        }
-                    },
                     message: 'success'
                 }
             }

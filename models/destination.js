@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const commentsSchema = require('./comment').schema
+const preMiddleware = require('../utils/dbhelper').preMiddleware
+
 
 const destination = new mongoose.Schema({
     id: mongoose.Schema.ObjectId,
@@ -19,6 +20,10 @@ const destination = new mongoose.Schema({
         type: String,
         default: ''
     },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
     created: {
         type: Date,
         default: Date.now
@@ -26,9 +31,10 @@ const destination = new mongoose.Schema({
     updated: {
         type: Date,
         default: Date.now
-    },
-    comments: [commentsSchema]
+    }
 })
+
+destination.pre('update', preMiddleware)
 
 
 module.exports = {
