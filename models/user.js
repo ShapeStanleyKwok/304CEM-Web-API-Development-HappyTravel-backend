@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const preMiddleware = require('../utils/dbhelper').preMiddleware
+
 const user = new mongoose.Schema({
     id: mongoose.Schema.ObjectId,
     email: {
@@ -38,6 +40,8 @@ const user = new mongoose.Schema({
         default: Date.now
     }
 })
+
+user.pre('update', preMiddleware)
 
 
 module.exports = {

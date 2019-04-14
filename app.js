@@ -59,7 +59,10 @@ app.use(cors())
 app.use(routers())
 
 app.use(ctx => {
-    ctx.status = 404
+    ctx.body = {
+        code: 404,
+        message: "URL error, use 'GET /api ' to fetch all URLs"
+    }
 })
 
 
