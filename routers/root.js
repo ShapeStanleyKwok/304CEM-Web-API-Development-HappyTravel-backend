@@ -10,7 +10,8 @@ router
                 authorization: '/api/user/authorization',
                 register: '/api/user'
             },
-            destination: '/api/destination'
+            destination: '/api/destination/{id}',
+            file: '/api/file'
         }
     })
 

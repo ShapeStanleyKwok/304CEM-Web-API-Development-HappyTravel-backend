@@ -6,13 +6,19 @@ module.exports = {
         return DETINATION.create(doc)
     },
 
-    find(sortKey = 'created', min, max) {
-        return DETINATION.find().sort(sortKey)
+    find(sortKey = 'created', filter) {
+        return DETINATION.find(filter).sort({
+            [sortKey]: -1
+        })
     },
 
-    update(_id, description) {
+    update(_id, body) {
+        return DETINATION.findByIdAndUpdate(_id, body)
+    },
+
+    delete(_id) {
         return DETINATION.findByIdAndUpdate(_id, {
-            description
+            isDeleted: true
         })
     }
 }

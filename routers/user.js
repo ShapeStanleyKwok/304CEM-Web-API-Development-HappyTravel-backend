@@ -25,6 +25,16 @@ router
         // register
         let user = await USER.register(email, password)
 
+        // set cookie
+        ctx.cookies.set(
+            '_id', user._id, {
+                path: '/',
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: false,
+                overwrite: false
+            }
+        );
+
         ctx.body = {
             code: 200,
             data: {
@@ -62,6 +72,15 @@ router
             }
         }
 
+        // set cookie
+        ctx.cookies.set(
+            '_id', user._id, {
+                path: '/',
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: false,
+                overwrite: false
+            }
+        );
         // login success
         ctx.body = {
             code: 200,

@@ -14,6 +14,10 @@ const comment = new mongoose.Schema({
         required: true,
         ref: 'destination'
     },
+    gallery: {
+        type: Array,
+        default: []
+    },
     content: {
         type: String,
         default: ''
