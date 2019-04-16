@@ -76,7 +76,5 @@ app.use(ctx => {
 module.exports = app.listen(config.port)
 
 if (!isTestEnv) {
-    console.log()
     console.log(`[App] server running on port: ${config.port}`)
-    console.log()
 }

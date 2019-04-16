@@ -18,7 +18,7 @@ module.exports = {
     },
 
     login(email, password) {
-        
+
         return USER.findOne({
             email,
             password
@@ -26,11 +26,6 @@ module.exports = {
     },
 
     update(_id, user) {
-        return USER.findByIdAndUpdate(
-            _id, {
-                user
-            }
-        )
-
+        return USER.findByIdAndUpdate(_id, user)
     }
 }

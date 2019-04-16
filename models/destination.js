@@ -4,6 +4,10 @@ const preMiddleware = require('../utils/dbhelper').preMiddleware
 
 const destination = new mongoose.Schema({
     id: mongoose.Schema.ObjectId,
+    userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user',
+    },
     name: {
         type: String,
         required: true

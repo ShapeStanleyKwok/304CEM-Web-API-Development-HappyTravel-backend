@@ -20,16 +20,9 @@ const user = new mongoose.Schema({
         type: String,
         default: '/avatar.jpg'
     },
-    contry: {
-        type: String,
-        default: ''
-    },
     address: {
         type: String,
         default: ''
-    },
-    DOB: {
-        type: Date
     },
     created: {
         type: Date,
