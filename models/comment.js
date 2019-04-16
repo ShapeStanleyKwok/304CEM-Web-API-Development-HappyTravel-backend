@@ -4,12 +4,12 @@ const preMiddleware = require('../utils/dbhelper').preMiddleware
 
 const comment = new mongoose.Schema({
     id: mongoose.Schema.ObjectId,
-    userId: {
+    user: {
         type: mongoose.Schema.ObjectId,
         required: true,
         ref: 'user'
     },
-    destinationId: {
+    destination: {
         type: mongoose.Schema.ObjectId,
         required: true,
         ref: 'destination'
@@ -22,7 +22,7 @@ const comment = new mongoose.Schema({
         type: String,
         default: ''
     },
-    isDelete: {
+    isDeleted: {
         type: Boolean,
         default: false
     },

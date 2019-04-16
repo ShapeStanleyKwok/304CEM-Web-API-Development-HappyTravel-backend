@@ -11,6 +11,7 @@ router
                 register: '/api/user'
             },
             destination: '/api/destination/{id}',
+            comment: '/api/comment/{id}',
             file: '/api/file'
         }
     })

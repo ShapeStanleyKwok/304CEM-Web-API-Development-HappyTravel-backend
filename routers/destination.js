@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const DESTINATION = require('../service/destination.service')
+const destinationService = require('../service/destination.service')
 
 router
     /**
@@ -12,11 +12,11 @@ router
         if (!_id) {
             return ctx.body = {
                 code: -1,
-                message: 'please confirm the parameters'
+                message: 'please confirm the params'
             }
         }
 
-        await DESTINATION.delete(_id).then(res => {
+        await destinationService.delete(_id).then(res => {
 
             ctx.body = {
                 code: 200,
@@ -35,7 +35,7 @@ router
         if (!_id) {
             return ctx.body = {
                 code: -1,
-                message: 'please confirm the parameters'
+                message: 'please confirm the params'
             }
         }
 
@@ -44,7 +44,7 @@ router
             isDeleted: false
         }
 
-        let res = await DESTINATION.find('created', filter)
+        let res = await destinationService.find('created', filter)
 
         ctx.body = {
             code: 200,
@@ -77,11 +77,14 @@ router
             }
         }
 
-        let res = await DESTINATION.find(sort, filter)
+        let res = await destinationService.find(sort, filter)
 
         ctx.body = {
             code: 200,
-            data: res.slice(min, max),
+            data: {
+                destinations: res.slice(min, max),
+                total: res.length
+            },
             message: 'success'
         }
     })
@@ -97,12 +100,12 @@ router
         if (!_id || !body) {
             return ctx.body = {
                 code: -1,
-                message: 'please confirm the parameters'
+                message: 'please confirm the params'
             }
-        }   
+        }
 
 
-        await DESTINATION.update(_id, body).then(res => {
+        await destinationService.update(_id, body).then(res => {
 
             ctx.body = {
                 code: 200,
@@ -126,11 +129,11 @@ router
         if (!name || !banner) {
             return ctx.body = {
                 code: -1,
-                message: 'please confirm the parameters'
+                message: 'please confirm the params'
             }
         }
 
-        await DESTINATION.create(ctx.request.body).then(res => {
+        await destinationService.create(ctx.request.body).then(res => {
 
             ctx.body = {
                 code: 200,

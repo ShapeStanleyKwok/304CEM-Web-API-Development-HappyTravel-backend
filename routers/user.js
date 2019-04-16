@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const USER = require('../service/user.service')
+const userService = require('../service/user.service')
 
 router
     /**
@@ -14,7 +14,7 @@ router
 
 
         // check 
-        let isExist = await USER.find('email', email)
+        let isExist = await userService.find('email', email)
         if (isExist) {
             return ctx.body = {
                 code: -1,
@@ -23,7 +23,7 @@ router
         }
 
         // register
-        let user = await USER.register(email, password)
+        let user = await userService.register(email, password)
 
         // set cookie
         ctx.cookies.set(
@@ -62,7 +62,7 @@ router
         let email = auth[0]
         let password = auth[1]
 
-        let user = await USER.login(email, password)
+        let user = await userService.login(email, password)
 
         // login fail
         if (!user) {
@@ -97,7 +97,7 @@ router
 
         const _id = ctx.params.id
 
-        let user = await USER.find({
+        let user = await userService.find({
             _id
         })
 
@@ -132,10 +132,11 @@ router
         const _id = ctx.params.id
         const user = ctx.request.body
 
-        await USER.update(_id, user).then(res => {
+        await userService.update(_id, user).then(res => {
             if (res) {
                 ctx.body = {
                     code: 200,
+                    data: res,
                     message: 'success'
                 }
             }
