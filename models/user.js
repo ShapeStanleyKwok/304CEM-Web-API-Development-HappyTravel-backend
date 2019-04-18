@@ -14,7 +14,7 @@ const user = new mongoose.Schema({
     },
     nickname: {
         type: String,
-        default: 'HTUser'
+        default: 'nickName'
     },
     avatar: {
         type: String,
