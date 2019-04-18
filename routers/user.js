@@ -104,7 +104,7 @@ router
         if (!user) {
             return ctx.body = {
                 code: -1,
-                message: 'fail to get user information'
+                message: 'fail to get userinfo'
             }
         }
 
@@ -114,8 +114,6 @@ router
                 email: user.email,
                 nickname: user.nickname,
                 avatar: user.avatar,
-                DOB: user.DOB,
-                country: user.country,
                 address: user.address,
                 creted: user.creted,
                 updated: user.updated
